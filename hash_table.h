@@ -9,7 +9,7 @@ template <class T>
 class HashTable{
     private:
         void h(int k);
-        Element* slots;
+        Element** slots;
         void search(int k);
     public:
         HashTable (int n);
