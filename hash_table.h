@@ -12,6 +12,9 @@ class HashTable{
         Element* slots;
     public:
         HashTable (int n);
+        insert (T d, int k);
+        remove (int k);
+        member (T d, int k);
 
     
 }
