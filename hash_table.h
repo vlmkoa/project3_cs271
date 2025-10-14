@@ -11,9 +11,7 @@ class HashTable{
         void h(int k);
         Element* slots;
     public:
-        HashTable (int n);
+        HashTable (int n);        
 
-    
-}
-
- #endif 
+};
+#endif
