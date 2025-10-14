@@ -14,6 +14,8 @@ public:
     Element<T>* next;
 
     // Constructors
+    Element()
+        : data(), key(-1), prev(nullptr), next(nullptr) {}
     Element(const T& data_, long key_)
         : data(data_), key(key_), prev(nullptr), next(nullptr) {}
 
@@ -22,3 +24,6 @@ public:
 };
 
 #endif
+
+
+
