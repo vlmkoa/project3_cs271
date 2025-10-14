@@ -10,6 +10,7 @@ class HashTable{
     private:
         void h(int k);
         Element* slots;
+        void search(int k);
     public:
         HashTable (int n);
         insert (T d, int k);
@@ -17,6 +18,6 @@ class HashTable{
         member (T d, int k);
 
     
-}
+};
 
  #endif 
