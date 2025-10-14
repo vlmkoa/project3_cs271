@@ -13,9 +13,9 @@ class HashTable{
         void search(int k);
     public:
         HashTable (int n);
-        insert (T d, int k);
-        remove (int k);
-        member (T d, int k);
+        void insert (T d, int k);
+        void remove (int k);
+        void member (T d, int k);
 
     
 };
