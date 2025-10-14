@@ -1,11 +1,6 @@
-
-
-#define HASHTABLE_CPP
-
-#include <iostream>
 #include "hash_table.h"
-#include <stdexcept>
-#include <limits>
-#include <sstream>
-using namespace std;
 
+template <class T>
+void HashTable(int n){
+    slots = new Element[n]
+}
