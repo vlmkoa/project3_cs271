@@ -18,14 +18,16 @@ int HashTable<T>::h(int k){
 template <class T>
 void HashTable<T>::insert (T d, int k){
     Element<T>* e = new Element<T>(d,k);
-    int hashk = h(k);
-    if (slots[hashk] == nullptr) {
-        slots[hashk] = e;
-    } else {
-        slots[hashk]->prev = e;
-        e->next = slots[hashk];
-        slots[hashk] = e;
-    }   
+    if (size != 0) {
+        int hashk = h(k);
+        if (slots[hashk] == nullptr) {
+            slots[hashk] = e;
+        } else {
+            slots[hashk]->prev = e;
+            e->next = slots[hashk];
+            slots[hashk] = e;
+        }   
+    }
     
     
 }
@@ -76,16 +78,17 @@ string HashTable<T>::to_string() const{
 
 template <class T>
 Element<T>* HashTable<T>::search(int k) {
-    int hashk = h(k);
-    Element<T>* curr = slots[hashk];
-    while ((curr != nullptr) && (curr->get_key() != k)) {
-        curr = curr->next;
+    if (size != 0) {
+        int hashk = h(k);
+        Element<T>* curr = slots[hashk];
+        while ((curr != nullptr) && (curr->get_key() != k)) {
+            curr = curr->next;
+        }
+        
+        //bool found = false;
+        if (curr->get_key() == k) {
+            return curr;
+        }
     }
-    
-    //bool found = false;
-    if (curr->get_key() == k) {
-        return curr;
-    }
-    
     return nullptr;
 }
