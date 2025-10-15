@@ -17,13 +17,7 @@ int HashTable<T>::h(int k){
 
 template <class T>
 void HashTable<T>::insert (T d, int k){
-    if (size < 1)
-    {
-        cout << "lol" << endl;
-    }
-
-    else{
-        Element<T>* e = new Element<T>(d,k);
+    Element<T>* e = new Element<T>(d,k);
     int hashk = h(k);
     if (slots[hashk] == nullptr) {
         slots[hashk] = e;
@@ -32,7 +26,6 @@ void HashTable<T>::insert (T d, int k){
         e->next = slots[hashk];
         slots[hashk] = e;
     }   
-    }
     
     
 }
@@ -43,8 +36,12 @@ void HashTable<T>::remove (int k){
 }
 
 template <class T>
-void HashTable<T>::member (T d, int k){
-
+bool HashTable<T>::member (T d, int k){
+    bool found = false;
+    if ((search(k)->get_data() == d) && (search(k)->get_key() == k)) {
+        found = true;
+    }
+    return found;
 }
 
 template <class T>
@@ -77,16 +74,17 @@ string HashTable<T>::to_string() const{
 }
 
 template <class T>
-void HashTable<T>::search(int k) {
+Element<T>* HashTable<T>::search(int k) {
     int hashk = h(k);
     Element<T>* curr = slots[hashk];
     while ((curr != nullptr) && (curr->get_key() != k)) {
         curr = curr->next;
     }
-    bool found = false;
-    if (curr->get_key() != k) {
-        found = true;
+    
+    //bool found = false;
+    if (curr->get_key() == k) {
+        return curr;
     }
-
-    return found;
+    
+    return nullptr;
 }
