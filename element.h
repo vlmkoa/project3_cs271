@@ -7,7 +7,7 @@ template<typename T>
 class Element {
 private:
     T data;
-    long key;
+    int key;
 
 public:
     Element<T>* prev;
@@ -19,7 +19,7 @@ public:
     Element(const T& data_, long key_)
         : data(data_), key(key_), prev(nullptr), next(nullptr) {}
 
-    long get_key() const { return key; }
+    int get_key() const { return key; }
     T get_data() const { return data; }
 };
 
