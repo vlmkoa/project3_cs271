@@ -82,6 +82,39 @@ void test_insert()
     }
 }
 
+void test_member()
+{
+    try
+    {
+        HashTable<int> empty_ht(0);
+        if (empty_ht.member(10, 6))
+        {
+            cout << "Incorrect membership in empty table" << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cout << "Error caused by trying to determine membership in empty table : " << e.what() << endl;
+    }
+    try
+    {
+        HashTable<int> ht(5);
+        ht.insert(10, 6);
+        if (ht.member(11, 6))
+        {
+            cout << "Incorrect membership in table" << endl;
+        }
+        if (!ht.member(10, 6))
+        {
+            cout << "Incorrect non-membership in table" << endl;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << "Error determining membership from table : " << e.what() << endl;
+    }
+}
+
 int main()
 {
     // string file_name = "usecase.cpp";
@@ -92,6 +125,7 @@ int main()
     test_get_key();
     test_get_data();
     test_insert();
+    test_member();
 
 
     // cout << "Testing completed" << endl;
