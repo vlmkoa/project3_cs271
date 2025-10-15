@@ -75,3 +75,18 @@ string HashTable<T>::to_string() const{
     }   
     return ss.str();
 }
+
+template <class T>
+void HashTable<T>::search(int k) {
+    int hashk = h(k);
+    Element<T>* curr = slots[hashk];
+    while ((curr != nullptr) && (curr->get_key() != k)) {
+        curr = curr->next;
+    }
+    bool found = false;
+    if (curr->get_key() != k) {
+        found = true;
+    }
+
+    return found;
+}
