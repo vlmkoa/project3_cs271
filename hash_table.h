@@ -12,7 +12,7 @@ class HashTable{
         int size;
         int h(int k);
         Element<T>** slots;
-        Element<T> search(int k);
+        Element<T>* search(int k);
     public:
         HashTable (int n);
         void insert (T d, int k);

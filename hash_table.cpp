@@ -75,7 +75,7 @@ string HashTable<T>::to_string() const{
 }
 
 template <class T>
-Element<T> HashTable<T>::search(int k) {
+Element<T>* HashTable<T>::search(int k) {
     int hashk = h(k);
     Element<T>* curr = slots[hashk];
     while ((curr != nullptr) && (curr->get_key() != k)) {
