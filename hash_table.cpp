@@ -38,7 +38,8 @@ void HashTable<T>::remove (int k){
 template <class T>
 bool HashTable<T>::member (T d, int k){
     bool found = false;
-    if ((search(k)->get_data() == d) && (search(k)->get_key() == k)) {
+    Element<T>* elt = search(k)
+    if ((elt->get_data() == d) && (elt->get_key() == k)) {
         found = true;
     }
     return found;

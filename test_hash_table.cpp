@@ -96,7 +96,7 @@ void test_member()
     {
         cout << "Error caused by trying to determine membership in empty table : " << e.what() << endl;
     }
-    /*
+    
     try
     {
         HashTable<int> ht(5);
@@ -114,7 +114,7 @@ void test_member()
     {
         cerr << "Error determining membership from table : " << e.what() << endl;
     }
-        */
+    
 }
 
 int main()
