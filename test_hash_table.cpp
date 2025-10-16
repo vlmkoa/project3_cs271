@@ -129,7 +129,7 @@ int main()
     test_insert();
     test_member();
 
-    // cout << "Testing completed" << endl;
+    cout << "Testing completed" << endl;
 
     return 0;
 }
