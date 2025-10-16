@@ -7,7 +7,7 @@ using namespace std;
 template <class T>
 HashTable<T>::HashTable(int n){
         size = n;
-        slots = new Element<T>*[n];
+        slots = new Element<T>*[n]();
 }
 
 template <class T>
