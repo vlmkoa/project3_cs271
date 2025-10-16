@@ -127,7 +127,7 @@ int main()
     test_get_key();
     test_get_data();
     test_insert();
-    //test_member();
+    test_member();
 
     // cout << "Testing completed" << endl;
 
