@@ -34,7 +34,21 @@ void HashTable<T>::insert (T d, int k){
 
 template <class T>
 void HashTable<T>::remove (int k){
-
+    Element<T>* elt = search(k);
+    if (elt != nullptr) {
+        if (elt->prev == nullptr) {
+            elt->next->prev = nullptr;
+            delete elt;
+        } else if (elt->next == nullptr)
+        {
+            elt->prev->next = nullptr;
+            delete elt;
+        } else {
+            elt->next->prev = elt->prev;
+            elt->prev->next = elt->next;
+            delete elt;
+        }
+    }
 }
 
 template <class T>
@@ -85,7 +99,6 @@ Element<T>* HashTable<T>::search(int k) {
             curr = curr->next;
         }
         
-        //bool found = false;
         if (curr->get_key() == k) {
             return curr;
         }
