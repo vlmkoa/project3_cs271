@@ -36,11 +36,13 @@ template <class T>
 void HashTable<T>::remove (int k){
     Element<T>* elt = search(k);
     if (elt != nullptr) {
-        if (elt->prev == nullptr) {
+        if (elt->prev == nullptr && elt->next == nullptr) {
+            cout << "heyy" << endl;
+            delete elt;
+        } else if (elt->prev == nullptr) {
             elt->next->prev = nullptr;
             delete elt;
-        } else if (elt->next == nullptr)
-        {
+        } else if (elt->next == nullptr) {
             elt->prev->next = nullptr;
             delete elt;
         } else {
@@ -99,7 +101,7 @@ Element<T>* HashTable<T>::search(int k) {
             curr = curr->next;
         }
         
-        if (curr->get_key() == k) {
+        if (curr != nullptr && curr->get_key() == k) {
             return curr;
         }
     }
