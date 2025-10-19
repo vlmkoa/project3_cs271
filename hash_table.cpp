@@ -37,10 +37,11 @@ void HashTable<T>::remove (int k){
     Element<T>* elt = search(k);
     if (elt != nullptr) {
         if (elt->prev == nullptr && elt->next == nullptr) {
-            cout << "heyy" << endl;
             delete elt;
+            slots[h(k)] = nullptr;
         } else if (elt->prev == nullptr) {
             elt->next->prev = nullptr;
+            slots[h(k)] = elt->next;
             delete elt;
         } else if (elt->next == nullptr) {
             elt->prev->next = nullptr;
