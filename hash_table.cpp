@@ -36,14 +36,14 @@ template <class T>
 void HashTable<T>::remove (int k){
     Element<T>* elt = search(k);
     if (elt != nullptr) {
-        if (elt->prev == nullptr && elt->next == nullptr) {
+        if (elt->prev == nullptr && elt->next == nullptr) { // if only elt in list
             delete elt;
             slots[h(k)] = nullptr;
-        } else if (elt->prev == nullptr) {
+        } else if (elt->prev == nullptr) { // if first elt in list
             elt->next->prev = nullptr;
             slots[h(k)] = elt->next;
             delete elt;
-        } else if (elt->next == nullptr) {
+        } else if (elt->next == nullptr) { // if last elt in list
             elt->prev->next = nullptr;
             delete elt;
         } else {
