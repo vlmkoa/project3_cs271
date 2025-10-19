@@ -6,8 +6,14 @@ using namespace std;
 
 template <class T>
 HashTable<T>::HashTable(int n){
-        size = n;
-        slots = new Element<T>*[n]();
+    size = n;
+    slots = new Element<T>*[n]();
+}
+
+template <class T>
+HashTable<T>::~HashTable(){
+    clear();
+    delete[] slots;
 }
 
 template <class T>
@@ -27,21 +33,20 @@ void HashTable<T>::insert (T d, int k){
             e->next = slots[hashk];
             slots[hashk] = e;
         }   
-    }
-    
-    
+    } 
 }
 
 template <class T>
 void HashTable<T>::remove (int k){
     Element<T>* elt = search(k);
     if (elt != nullptr) {
+        int hashk = h(k);
         if (elt->prev == nullptr && elt->next == nullptr) { // if only elt in list
             delete elt;
-            slots[h(k)] = nullptr;
+            slots[hashk] = nullptr;
         } else if (elt->prev == nullptr) { // if first elt in list
             elt->next->prev = nullptr;
-            slots[h(k)] = elt->next;
+            slots[hashk] = elt->next;
             delete elt;
         } else if (elt->next == nullptr) { // if last elt in list
             elt->prev->next = nullptr;
@@ -107,4 +112,17 @@ Element<T>* HashTable<T>::search(int k) {
         }
     }
     return nullptr;
+}
+
+template <class T>
+void HashTable<T>::clear() noexcept {
+    for (int i = 0; i < size; i++) {
+        Element<T>* cur = slots[i];
+        while (cur) {
+            Element<T>* t = cur;
+            cur = cur->next;
+            delete t;                 // releases nodes
+        }
+        slots[i] = nullptr;
+    }
 }

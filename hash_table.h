@@ -15,10 +15,12 @@ class HashTable{
         Element<T>* search(int k);
     public:
         HashTable (int n);
+        ~HashTable();
         void insert (T d, int k);
         void remove (int k);
         bool member (T d, int k);
         string to_string () const;
+        void clear();
     
 };
 
