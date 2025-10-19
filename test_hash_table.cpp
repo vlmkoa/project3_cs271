@@ -75,6 +75,9 @@ void test_insert()
         {
             cout << "Incorrect result of inserting into table" << endl;
         }
+        ht.insert(12, 16);
+        ht.insert(17, 20);
+        cout << ht.to_string();
     }
     catch (exception &e)
     {

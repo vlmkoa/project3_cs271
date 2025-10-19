@@ -24,13 +24,13 @@ void HashTable<T>::insert (T d, int k){
 
     else{
         Element<T>* e = new Element<T>(d,k);
-    int hashk = h(k);
-    if (slots[hashk] == nullptr) {
-        slots[hashk] = e;
-    } else {
-        slots[hashk]->prev = e;
-        e->next = slots[hashk];
-        slots[hashk] = e;
+        int hashk = h(k);
+        if (slots[hashk] == nullptr) {
+            slots[hashk] = e;
+        } else {
+            slots[hashk]->prev = e;
+            e->next = slots[hashk];
+            slots[hashk] = e;
     }   
     }
     
