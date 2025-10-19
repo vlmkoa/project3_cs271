@@ -12,12 +12,12 @@ class HashTable{
         int size;
         int h(int k);
         Element<T>** slots;
-        void search(int k);
+        Element<T>* search(int k);
     public:
         HashTable (int n);
         void insert (T d, int k);
         void remove (int k);
-        void member (T d, int k);
+        bool member (T d, int k);
         string to_string () const;
     
 };

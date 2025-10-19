@@ -7,7 +7,7 @@ using namespace std;
 template <class T>
 HashTable<T>::HashTable(int n){
         size = n;
-        slots = new Element<T>*[n];
+        slots = new Element<T>*[n]();
 }
 
 template <class T>
@@ -17,13 +17,8 @@ int HashTable<T>::h(int k){
 
 template <class T>
 void HashTable<T>::insert (T d, int k){
-    if (size < 1)
-    {
-        cout << "lol" << endl;
-    }
-
-    else{
-        Element<T>* e = new Element<T>(d,k);
+    Element<T>* e = new Element<T>(d,k);
+    if (size != 0) {
         int hashk = h(k);
         if (slots[hashk] == nullptr) {
             slots[hashk] = e;
@@ -31,7 +26,7 @@ void HashTable<T>::insert (T d, int k){
             slots[hashk]->prev = e;
             e->next = slots[hashk];
             slots[hashk] = e;
-    }   
+        }   
     }
     
     
@@ -39,12 +34,34 @@ void HashTable<T>::insert (T d, int k){
 
 template <class T>
 void HashTable<T>::remove (int k){
-
+    Element<T>* elt = search(k);
+    if (elt != nullptr) {
+        if (elt->prev == nullptr && elt->next == nullptr) { // if only elt in list
+            delete elt;
+            slots[h(k)] = nullptr;
+        } else if (elt->prev == nullptr) { // if first elt in list
+            elt->next->prev = nullptr;
+            slots[h(k)] = elt->next;
+            delete elt;
+        } else if (elt->next == nullptr) { // if last elt in list
+            elt->prev->next = nullptr;
+            delete elt;
+        } else {
+            elt->next->prev = elt->prev;
+            elt->prev->next = elt->next;
+            delete elt;
+        }
+    }
 }
 
 template <class T>
-void HashTable<T>::member (T d, int k){
-
+bool HashTable<T>::member (T d, int k){
+    bool found = false;
+    Element<T>* elt = search(k);
+    if ((elt != nullptr) && (elt->get_data() == d) && (elt->get_key() == k)) {
+        found = true;
+    }
+    return found;
 }
 
 template <class T>
@@ -74,4 +91,20 @@ string HashTable<T>::to_string() const{
         
     }   
     return ss.str();
+}
+
+template <class T>
+Element<T>* HashTable<T>::search(int k) {
+    if (size != 0) {
+        int hashk = h(k);
+        Element<T>* curr = slots[hashk];
+        while ((curr != nullptr) && (curr->get_key() != k)) {
+            curr = curr->next;
+        }
+        
+        if (curr != nullptr && curr->get_key() == k) {
+            return curr;
+        }
+    }
+    return nullptr;
 }
