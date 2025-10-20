@@ -3,6 +3,9 @@
 
 using namespace std;
 
+
+/*Original Test Cases*/
+
 void test_get_key()
 {
     try
@@ -168,20 +171,99 @@ void test_remove()
     }
 }
 
+/*Extended Test Cases*/
+
+void test_collision_handling()
+{
+    try
+    {
+        HashTable<int> ht(3);
+        ht.insert(10, 3); // h(3)=0
+        ht.insert(20, 6); // h(6)=0, collision
+        ht.insert(30, 9); // h(9)=0, collision
+        cout << "Collision handling test table:\n" << ht.to_string() << endl;
+
+        if (!ht.member(10, 3) || !ht.member(20, 6) || !ht.member(30, 9))
+            cout << "Collision test membership failed.\n";
+    }
+    catch (exception &e)
+    {
+        cerr << "Error testing collision: " << e.what() << endl;
+    }
+}
+
+void test_clear()
+{
+    try
+    {
+        HashTable<int> ht(4);
+        ht.insert(1, 1);
+        ht.insert(2, 2);
+        ht.insert(3, 3);
+        cout << "Before clear:\n" << ht.to_string();
+        ht.clear();
+        cout << "After clear:\n" << ht.to_string();
+    }
+    catch (exception &e)
+    {
+        cerr << "Error testing clear: " << e.what() << endl;
+    }
+}
+
+void test_string_type()
+{
+    try
+    {
+        HashTable<string> ht(3);
+        ht.insert("apple", 1);
+        ht.insert("banana", 4);
+        ht.insert("pear", 7);
+        cout << "String hash table:\n" << ht.to_string();
+        if (!ht.member("banana", 4))
+            cout << "String member test failed.\n";
+    }
+    catch (exception &e)
+    {
+        cerr << "Error testing string type: " << e.what() << endl;
+    }
+}
+
+void test_chain_removal()
+{
+    try
+    {
+        HashTable<int> ht(3);
+        ht.insert(1, 3);  // h(3)=0
+        ht.insert(2, 6);  // h(6)=0
+        ht.insert(3, 9);  // h(9)=0
+        cout << "Before chain removals:\n" << ht.to_string();
+        ht.remove(6); // remove middle element
+        cout << "After removing (2,6):\n" << ht.to_string();
+        ht.remove(3); // remove tail
+        ht.remove(9); // remove head
+        cout << "After removing all:\n" << ht.to_string();
+    }
+    catch (exception &e)
+    {
+        cerr << "Error in chain removal test: " << e.what() << endl;
+    }
+}
+
 int main()
 {
-    // string file_name = "usecase.cpp";
-    // cout << endl
-    //      << "Running tests for " << file_name << endl
-    //      << endl;
-
+    // Original tests
     test_get_key();
     test_get_data();
     test_insert();
     test_member();
     test_remove();
 
-    cout << "Testing completed" << endl;
+    // Extended tests
+    test_collision_handling();
+    test_clear();
+    test_string_type();
+    test_chain_removal();
 
+    cout << "Testing completed" << endl;
     return 0;
 }
