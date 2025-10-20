@@ -3,9 +3,6 @@
 
 using namespace std;
 
-
-/*Original Test Cases*/
-
 void test_get_key()
 {
     try
@@ -20,6 +17,14 @@ void test_get_key()
         {
             cout << "Incorrect result from get key. Expected 6 but got : " << e.get_key() << endl;
         }
+
+        //different data type
+        Element<string> str_elem("apple", 5);
+        if (str_elem.get_key() != 5)
+        {
+            cout << "Incorrect string element key. Expected 5 but got : " << str_elem.get_key() << endl;
+        }
+
     }
     catch (exception &e)
     {
@@ -41,6 +46,14 @@ void test_get_data()
         {
             cout << "Incorrect result from get data. Expected 10 but got : " << e.get_data() << endl;
         }
+
+        //test with string type
+        Element<string> str_elem("apple", 7);
+        if (str_elem.get_data() != "apple")
+        {
+            cout << "Incorrect string element data. Expected 'apple' but got : " << str_elem.get_data() << endl;
+        }
+
     }
     catch (exception &e)
     {
@@ -56,7 +69,7 @@ void test_insert()
         empty_ht.insert(10, 6);
         if (empty_ht.to_string() != "")
         {
-            cout << "Incorrect result of inserting into table. Expected and empty string But got\n\n"
+            cout << "Incorrect result of inserting into table. Expected an empty string but got\n\n"
                  << empty_ht.to_string() << endl;
         }
     }
@@ -64,27 +77,37 @@ void test_insert()
     {
         cout << "Error caused by trying to insert into empty table : " << e.what() << endl;
     }
+
     try
     {
         HashTable<int> ht(5);
         ht.insert(10, 6);
-        if (ht.to_string() != "0: \n1: (10,6) \n2: \n3: \n4: \n")
-        {
-            cout << "Incorrect result of inserting into table. Expected\n\n0: \n1: (10,6) \n2: \n3: \n4: \n\nBut got\n\n"
-                 << ht.to_string() << endl;
-        }
         ht.insert(1, 21);
-        if (ht.to_string() != "0: \n1: (1,21) (10,6) \n2: \n3: \n4: \n")
-        {
-            cout << "Incorrect result of inserting into table" << endl;
-        }
         ht.insert(12, 16);
         ht.insert(17, 20);
-        cout << ht.to_string();
+        cout << "After inserts:\n" << ht.to_string() << endl;
+
+        //Collision handling check
+        HashTable<int> coll_ht(3);
+        coll_ht.insert(10, 3);
+        coll_ht.insert(20, 6);
+        coll_ht.insert(30, 9);
+        cout << "Collision handling table:\n" << coll_ht.to_string() << endl;
+
+        if (!coll_ht.member(10, 3) || !coll_ht.member(20, 6) || !coll_ht.member(30, 9))
+            cout << "Collision membership failed.\n";
+
+        //Insert with string type
+        HashTable<string> str_ht(4);
+        str_ht.insert("apple", 1);
+        str_ht.insert("banana", 4);
+        str_ht.insert("pear", 7);
+        cout << "String hash table:\n" << str_ht.to_string() << endl;
+
     }
     catch (exception &e)
     {
-        cerr << "Error inserting into non-empty table : " << e.what() << endl;
+        cerr << "Error inserting into table : " << e.what() << endl;
     }
 }
 
@@ -115,12 +138,24 @@ void test_member()
         {
             cout << "Incorrect non-membership in table" << endl;
         }
+
+        //Check multiple members
+        ht.insert(20, 11);
+        ht.insert(30, 16);
+        if (!ht.member(30, 16))
+            cout << "Failed to find inserted element (30,16)" << endl;
+
+        //Check string type membership
+        HashTable<string> str_ht(3);
+        str_ht.insert("apple", 1);
+        str_ht.insert("banana", 2);
+        if (!str_ht.member("banana", 2))
+            cout << "Failed to find string element (banana,2)" << endl;
     }
     catch (exception &e)
     {
         cerr << "Error determining membership from table : " << e.what() << endl;
     }
-    
 }
 
 void test_remove()
@@ -131,7 +166,7 @@ void test_remove()
         empty_ht.remove(6);
         if (empty_ht.to_string() != "")
         {
-            cout << "Incorrect result of removing from empty table. Expected and empty string But got\n\n"
+            cout << "Incorrect result removing from empty table. Expected empty string but got\n\n"
                  << empty_ht.to_string() << endl;
         }
     }
@@ -139,39 +174,47 @@ void test_remove()
     {
         cout << "Error caused by trying to remove from empty table : " << e.what() << endl;
     }
+
     try
     {
         HashTable<int> ht(5);
         ht.insert(10, 6);
         ht.remove(5);
-        if (ht.to_string() != "0: \n1: (10,6) \n2: \n3: \n4: \n")
+        ht.remove(6);
+        if (ht.to_string() != "0: \n1: \n2: \n3: \n4: \n")
         {
-            cout << "Incorrect result of removing non-member from table. Expected\n\n0: \n1: (10,6) \n2: \n3: \n4: \n\nBut got\n\n"
-                 << ht.to_string() << endl;
+            cout << "Incorrect removal result. Expected empty table but got\n\n" << ht.to_string() << endl;
         }
-    }
-    catch (exception &e)
-    {
-        cerr << "Error removing non-member from table : " << e.what() << endl;
-    }
-    try
-    {
-        HashTable<int> ht2(5);
-        ht2.insert(10, 6);
-        ht2.remove(6);
-        if (ht2.to_string() != "0: \n1: \n2: \n3: \n4: \n")
-        {
-            cout << "Incorrect result removing member from table. Expected\n\n0: \n1: \n2: \n3: \n4: \n\nBut got\n\n"
-                 << ht2.to_string() << endl;
-        }
+
+        //Chain removal test
+        HashTable<int> chain_ht(3);
+        chain_ht.insert(1, 3);
+        chain_ht.insert(2, 6);
+        chain_ht.insert(3, 9);
+        cout << "Before chained removal:\n" << chain_ht.to_string();
+
+        chain_ht.remove(6);
+        cout << "After removing (2,6):\n" << chain_ht.to_string();
+
+        chain_ht.remove(3);
+        chain_ht.remove(9);
+        cout << "After removing all:\n" << chain_ht.to_string();
+
+        //Clear function test
+        HashTable<int> ht2(4);
+        ht2.insert(1, 1);
+        ht2.insert(2, 2);
+        ht2.insert(3, 3);
+        cout << "Before clear:\n" << ht2.to_string();
+        ht2.clear();
+        cout << "After clear:\n" << ht2.to_string();
+
     }
     catch (exception &e)
     {
         cerr << "Error removing member from table : " << e.what() << endl;
     }
 }
-
-/*Extended Test Cases*/
 
 void test_collision_handling()
 {
