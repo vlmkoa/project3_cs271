@@ -85,7 +85,11 @@ void test_insert()
         ht.insert(1, 21);
         ht.insert(12, 16);
         ht.insert(17, 20);
-        cout << "After inserts:\n" << ht.to_string() << endl;
+        if (ht.to_string() != "0: (17,20) \n1: (10,6) (1,21) (12,16) \n2: \n3: \n4: \n")
+        {
+            cout << "Incorrect result of inserting into table. Expected \n0: (17,20) \n1: (10,6) (1,21) (12,16) \n2: \n3: \n4: \n but got\n\n"
+                 << ht.to_string() << endl;
+        }
 
         //Collision handling check
         HashTable<int> coll_ht(3);
