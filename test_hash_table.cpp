@@ -100,7 +100,7 @@ void test_insert()
         if (ht.to_string() != "0: (30,9) (20,6) (10,3) \n1: \n2: \n")
         {
             cout << "Incorrect result of collision handling. Expected \n0: (30,9) (20,6) (10,3) \n1: \n2: \n but got\n\n"
-                 << ht.to_string() << endl;
+                 << coll_ht.to_string() << endl;
         }
 
         //Insert with string type
@@ -109,10 +109,10 @@ void test_insert()
         str_ht.insert("banana", 4);
         str_ht.insert("pear", 7);
         str_ht.insert("orange", 5);
-        if (ht.to_string() != "0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n")
+        if (str_ht.to_string() != "0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n")
         {
             cout << "Incorrect result of collision handling. Expected \n0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n but got\n\n"
-                 << ht.to_string() << endl;
+                 << str_ht.to_string() << endl;
         }
 
     }

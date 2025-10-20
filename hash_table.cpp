@@ -26,9 +26,9 @@ int HashTable<T>::h(size_t k){
     return k%size;
 
     // Most Significant Bits implementation
-    // int p = log2(size);
+    //int p = log2(size);
     
-    // // extract the p most significant bits
+    // extract the p most significant bits
     // int width = floor(log2(k)) + 1; //the number of bits that the key value would occupy 
     // // a better method for width should specify desired width of all the input keys
     // size_t result = width > p ? (k >> (width - p)) : k; //if width is less than p, then result is just the number itself
