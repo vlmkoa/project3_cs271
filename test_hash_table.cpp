@@ -82,12 +82,13 @@ void test_insert()
     {
         HashTable<int> ht(5);
         ht.insert(10, 6);
-        ht.insert(1, 21);
-        ht.insert(12, 16);
+        ht.insert(1, 22);
+        ht.insert(12, 18);
         ht.insert(17, 20);
-        if (ht.to_string() != "0: (17,20) \n1: (10,6) (1,21) (12,16) \n2: \n3: \n4: \n")
+        ht.insert(8, 24);
+        if (ht.to_string() != "0: (17,20) \n1: (10,6) \n2: (1,22) \n3: (12,18) \n4: (8,24) \n")
         {
-            cout << "Incorrect result of inserting into table. Expected \n0: (17,20) \n1: (10,6) (1,21) (12,16) \n2: \n3: \n4: \n but got\n\n"
+            cout << "Incorrect result of inserting into table. Expected \n0: (17,20) \n1: (10,6) \n2: (1,22) \n3: (12,18) \n4: (8,24) \n but got\n\n"
                  << ht.to_string() << endl;
         }
 
@@ -96,17 +97,23 @@ void test_insert()
         coll_ht.insert(10, 3);
         coll_ht.insert(20, 6);
         coll_ht.insert(30, 9);
-        cout << "Collision handling table:\n" << coll_ht.to_string() << endl;
-
-        if (!coll_ht.member(10, 3) || !coll_ht.member(20, 6) || !coll_ht.member(30, 9))
-            cout << "Collision membership failed.\n";
+        if (ht.to_string() != "0: (30,9) (20,6) (10,3) \n1: \n2: \n")
+        {
+            cout << "Incorrect result of collision handling. Expected \n0: (30,9) (20,6) (10,3) \n1: \n2: \n but got\n\n"
+                 << ht.to_string() << endl;
+        }
 
         //Insert with string type
         HashTable<string> str_ht(4);
         str_ht.insert("apple", 1);
         str_ht.insert("banana", 4);
         str_ht.insert("pear", 7);
-        cout << "String hash table:\n" << str_ht.to_string() << endl;
+        str_ht.insert("orange", 5);
+        if (ht.to_string() != "0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n")
+        {
+            cout << "Incorrect result of collision handling. Expected \n0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n but got\n\n"
+                 << ht.to_string() << endl;
+        }
 
     }
     catch (exception &e)
@@ -136,25 +143,30 @@ void test_member()
         ht.insert(10, 6);
         if (ht.member(11, 6))
         {
-            cout << "Incorrect membership in table" << endl;
+            cout << "Incorrect membership in table " << ht.to_string() << endl;
         }
         if (!ht.member(10, 6))
         {
-            cout << "Incorrect non-membership in table" << endl;
+            cout << "Incorrect non-membership in table " << ht.to_string() << endl;
         }
 
         //Check multiple members
         ht.insert(20, 11);
         ht.insert(30, 16);
-        if (!ht.member(30, 16))
-            cout << "Failed to find inserted element (30,16)" << endl;
+        ht.insert(40, 18);
+        if (!ht.member(30, 16)) //first member in linked list
+            cout << "Failed to find inserted element (30,16) in " << ht.to_string() << endl;
+        if (!ht.member(10, 6)) //last member in linked list
+            cout << "Failed to find inserted element (40,18) in " << ht.to_string() << endl;
+        if (!ht.member(20, 11)) //middle member in linked list
+            cout << "Failed to find inserted element (30,16) in " << ht.to_string() << endl;
 
         //Check string type membership
         HashTable<string> str_ht(3);
         str_ht.insert("apple", 1);
         str_ht.insert("banana", 2);
         if (!str_ht.member("banana", 2))
-            cout << "Failed to find string element (banana,2)" << endl;
+            cout << "Failed to find string element (banana,2) in " << ht.to_string() << endl;
     }
     catch (exception &e)
     {
@@ -195,9 +207,13 @@ void test_remove()
         chain_ht.insert(1, 3);
         chain_ht.insert(2, 6);
         chain_ht.insert(3, 9);
-        cout << "Before chained removal:\n" << chain_ht.to_string();
+        string before = chain_ht.to_string();
+        //cout << "Before chained removal:\n" << chain_ht.to_string();
 
         chain_ht.remove(6);
+        if (before != ht.to_string()) {
+            cout << "Incorrect removal result. Expected to remove "
+        }
         cout << "After removing (2,6):\n" << chain_ht.to_string();
 
         chain_ht.remove(3);
