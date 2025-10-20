@@ -10,18 +10,19 @@ template <class T>
 class HashTable{
     private:
         int size;
-        int h(int k);
         Element<T>** slots;
-        Element<T>* search(int k);
+        Element<T>* search(long k);
+        int h(long k);
     public:
         HashTable (int n);
         ~HashTable();
-        void insert (T d, int k);
-        void remove (int k);
-        bool member (T d, int k);
+        void insert (T d, long k);
+        void securedInsert (T d, long k);
+        void remove (long k);
+        bool member (T d, long k);
         string to_string () const;
-        void clear();
-    
+        void clear() noexcept;
+        bool isMemberInSlot(T data, long k);
 };
 
  #endif 

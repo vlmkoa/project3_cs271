@@ -17,12 +17,16 @@ HashTable<T>::~HashTable(){
 }
 
 template <class T>
-int HashTable<T>::h(int k){
+int HashTable<T>::h(long k){
     return k%size;
 }
 
 template <class T>
-void HashTable<T>::insert (T d, int k){
+void HashTable<T>::insert (T d, long k){
+    if (search(k) != nullptr){
+        cout<<"Key occupied, cannot insert";
+        return;
+    } 
     Element<T>* e = new Element<T>(d,k);
     if (size != 0) {
         int hashk = h(k);
@@ -32,12 +36,13 @@ void HashTable<T>::insert (T d, int k){
             slots[hashk]->prev = e;
             e->next = slots[hashk];
             slots[hashk] = e;
-        }   
+        }
+        
     } 
 }
 
 template <class T>
-void HashTable<T>::remove (int k){
+void HashTable<T>::remove (long k){
     Element<T>* elt = search(k);
     if (elt != nullptr) {
         int hashk = h(k);
@@ -60,13 +65,13 @@ void HashTable<T>::remove (int k){
 }
 
 template <class T>
-bool HashTable<T>::member (T d, int k){
-    bool found = false;
+bool HashTable<T>::member (T d, long k){
     Element<T>* elt = search(k);
     if ((elt != nullptr) && (elt->get_data() == d) && (elt->get_key() == k)) {
-        found = true;
+        return true;
     }
-    return found;
+
+    return false;
 }
 
 template <class T>
@@ -81,7 +86,7 @@ string HashTable<T>::to_string() const{
             while (current != nullptr)
             {
                 T data = current->get_data();
-                int key = current->get_key();
+                long key = current->get_key();
                 ss << "(";
                 ss << data;
                 ss << ",";
@@ -99,7 +104,7 @@ string HashTable<T>::to_string() const{
 }
 
 template <class T>
-Element<T>* HashTable<T>::search(int k) {
+Element<T>* HashTable<T>::search(long k) {
     if (size != 0) {
         int hashk = h(k);
         Element<T>* curr = slots[hashk];
@@ -115,14 +120,48 @@ Element<T>* HashTable<T>::search(int k) {
 }
 
 template <class T>
+bool HashTable<T>::isMemberInSlot(T data, long k) {
+    if (size != 0) {
+        int hashk = h(k);
+        Element<T>* curr = slots[hashk];
+        while ((curr != nullptr) && (curr->get_data() != data)) {
+            curr = curr->next;
+        }
+        
+        if (curr != nullptr && curr->get_data() == data) {
+            return true;
+        }
+    }
+    return false;
+}
+
+template <class T>
+void HashTable<T>::securedInsert (T d, long k){
+    Element<T>* e = new Element<T>(d,-1);
+    if (size != 0) {
+        int hashk = h(k);
+        if (slots[hashk] == nullptr) {
+            slots[hashk] = e;
+        } else {
+            slots[hashk]->prev = e;
+            e->next = slots[hashk];
+            slots[hashk] = e;
+        }
+        
+    } 
+}
+
+template <class T>
 void HashTable<T>::clear() noexcept {
     for (int i = 0; i < size; i++) {
         Element<T>* cur = slots[i];
         while (cur) {
             Element<T>* t = cur;
             cur = cur->next;
-            delete t;                 // releases nodes
+            delete t;                
         }
         slots[i] = nullptr;
     }
 }
+
+template class HashTable<string>;
