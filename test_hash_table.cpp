@@ -97,9 +97,9 @@ void test_insert()
         coll_ht.insert(10, 3);
         coll_ht.insert(20, 6);
         coll_ht.insert(30, 9);
-        if (ht.to_string() != "0: (30,9) (20,6) (10,3) \n1: \n2: \n")
+        if (coll_ht.to_string() != "0: (30,9) (20,6) (10,3) \n1: \n2: \n")
         {
-            cout << "Incorrect result of collision handling. Expected \n0: (30,9) (20,6) (10,3) \n1: \n2: \n but got\n\n"
+            cout << "Incorrect result of collision handling. Expected \n0: (30,9) (20,6) (10,3) \n1: \n2: \nbut got\n\n"
                  << coll_ht.to_string() << endl;
         }
 
@@ -109,9 +109,9 @@ void test_insert()
         str_ht.insert("banana", 4);
         str_ht.insert("pear", 7);
         str_ht.insert("orange", 5);
-        if (str_ht.to_string() != "0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n")
+        if (str_ht.to_string() != "0: (banana,4) \n1: (orange,5) (apple,1) \n2: \n3: (pear,7) \n")
         {
-            cout << "Incorrect result of collision handling. Expected \n0: (banana,4) \n1: (orange,5) (apple,1) \n2: (pear,7) \n3: \n but got\n\n"
+            cout << "Incorrect result of collision handling. Expected \n0: (banana,4) \n1: (orange,5) (apple,1) \n2: \n3: (pear,7) \n but got\n\n"
                  << str_ht.to_string() << endl;
         }
 
