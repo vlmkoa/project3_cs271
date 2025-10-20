@@ -174,7 +174,7 @@ void test_login()
 {
     try
     {
-        HashTable<string> *ht = create_table<string>("logins.csv", 10);
+        HashTable<string> *ht = create_table("logins.csv", 10);
         string username = "IEv";
         string password = "7170790290";
         if (!login(ht, username, password))
