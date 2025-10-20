@@ -17,27 +17,14 @@ HashTable<string>* create_table(string fname, int m) {
         size_t comma_pos = line.find(',');
         if (comma_pos != string::npos) {
             
-             string username = line.substr(0, comma_pos); //username before the comma
-             string passwordStr = line.substr(comma_pos + 2); //password after the comma and a space as in the file
+            string username = line.substr(0, comma_pos); //username before the comma
+            string passwordStr = line.substr(comma_pos + 2); //password after the comma and a space as in the file
              
             // converting password to integer for hashing
-            long password = stoull(passwordStr);
+            size_t password = stoull(passwordStr);
              
             // store username with the hash of password as the key (password is not stored, only used for hashing)
-            //ht->securedInsert(username, password);
-            //Element<T>* e = new Element<T>(d, -1);
-            int hashk = ht->h(password);
-            ht->insert(username, hashk);
-            /*
-            if (slots[hashk] == nullptr) {
-                slots[hashk] = e;
-            }
-            else {
-                slots[hashk]->prev = e;
-                e->next = slots[hashk];
-                slots[hashk] = e;
-            }
-            */
+            ht->securedInsert(username, password);
 
         }
     }
@@ -51,20 +38,8 @@ bool login(HashTable<string>* ht, string username, string password) {
     }
     
     try {
-        long passwordInt = stoull(password);
-        //return ht->isMemberInSlot(username, passwordInt);
-        int hashk = h(passwordInt);
-        /*Element<T>* curr = slots[hashk];
-        while ((curr != nullptr) && (curr->get_data() != data)) {
-            curr = curr->next;
-        }
-
-        if (curr != nullptr && curr->get_data() == data) {
-            return true;
-        }
-        return false;
-        */
-        return ht->member(username, hashk);
+        size_t passwordInt = stoull(password);
+        return ht->isMemberInSlot(username, passwordInt);
     } catch (const invalid_argument& e) {
         // password is not a valid integer
         return false;

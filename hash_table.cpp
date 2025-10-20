@@ -1,11 +1,15 @@
 #include "hash_table.h"
 #include <sstream>
 #include <string>
+#include <cmath> 
 
 using namespace std;
 
 template <class T>
 HashTable<T>::HashTable(int n){
+    if (n < 0)  {
+        cerr << "Size cannot be less than 0";
+    }
     size = n;
     slots = new Element<T>*[n]();
 }
@@ -17,9 +21,25 @@ HashTable<T>::~HashTable(){
 }
 
 template <class T>
-int HashTable<T>::h(long k){
+int HashTable<T>::h(size_t k){
+    // Modular Method
     return k%size;
+
+    // Most Significant Bits implementation
+    //int p = log2(size);
+    
+    // extract the p most significant bits
+    // int width = floor(log2(k)) + 1; //the number of bits that the key value would occupy 
+    // size_t result = (k >> (width - p));
+    
+    // return (int)result;
+
+    // Cormen's Multiplication Method implementation
+    // const double A = (sqrt(5) - 1) / 2;
+    // double frac = fmod(k * A, 1.0);   // fractional part
+    // return (int)(size * frac);
 }
+
 
 template <class T>
 void HashTable<T>::insert (T d, long k){

@@ -9,7 +9,7 @@ int main() {
     cout << "=== Testing Login System ===" << endl;
     
     // Test with a small hash table
-    HashTable<string>* userTable = create_table("logins.csv", 11);
+    HashTable<string>* userTable = create_table("logins.csv", 32);
     cout << userTable->to_string();
 
     

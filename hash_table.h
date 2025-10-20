@@ -22,7 +22,7 @@ class HashTable{
         string to_string () const;
         void clear() noexcept;
         bool isMemberInSlot(T data, long k);
-        int h(long k);
+        int h(size_t k);
 };
 
  #endif 
