@@ -12,7 +12,6 @@ class HashTable{
         int size;
         Element<T>** slots;
         Element<T>* search(long k);
-        int h(long k);
     public:
         HashTable (int n);
         ~HashTable();
@@ -23,6 +22,7 @@ class HashTable{
         string to_string () const;
         void clear() noexcept;
         bool isMemberInSlot(T data, long k);
+        int h(long k);
 };
 
  #endif 

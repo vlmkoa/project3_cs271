@@ -23,10 +23,10 @@ int HashTable<T>::h(long k){
 
 template <class T>
 void HashTable<T>::insert (T d, long k){
-    if (search(k) != nullptr){
+    /*if (search(k) != nullptr) {
         cout<<"Key occupied, cannot insert";
         return;
-    } 
+    }  */
     Element<T>* e = new Element<T>(d,k);
     if (size != 0) {
         int hashk = h(k);

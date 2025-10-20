@@ -24,7 +24,20 @@ HashTable<string>* create_table(string fname, int m) {
             long password = stoull(passwordStr);
              
             // store username with the hash of password as the key (password is not stored, only used for hashing)
-            ht->securedInsert(username, password);
+            //ht->securedInsert(username, password);
+            //Element<T>* e = new Element<T>(d, -1);
+            int hashk = ht->h(password);
+            ht->insert(username, hashk);
+            /*
+            if (slots[hashk] == nullptr) {
+                slots[hashk] = e;
+            }
+            else {
+                slots[hashk]->prev = e;
+                e->next = slots[hashk];
+                slots[hashk] = e;
+            }
+            */
 
         }
     }
@@ -39,7 +52,19 @@ bool login(HashTable<string>* ht, string username, string password) {
     
     try {
         long passwordInt = stoull(password);
-        return ht->isMemberInSlot(username, passwordInt);
+        //return ht->isMemberInSlot(username, passwordInt);
+        int hashk = h(passwordInt);
+        /*Element<T>* curr = slots[hashk];
+        while ((curr != nullptr) && (curr->get_data() != data)) {
+            curr = curr->next;
+        }
+
+        if (curr != nullptr && curr->get_data() == data) {
+            return true;
+        }
+        return false;
+        */
+        return ht->member(username, hashk);
     } catch (const invalid_argument& e) {
         // password is not a valid integer
         return false;
