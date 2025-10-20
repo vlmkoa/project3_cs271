@@ -115,7 +115,7 @@ Element<T>* HashTable<T>::search(int k) {
 }
 
 template <class T>
-void HashTable<T>::clear() noexcept {
+void HashTable<T>::clear() {
     for (int i = 0; i < size; i++) {
         Element<T>* cur = slots[i];
         while (cur) {
