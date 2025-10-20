@@ -1,5 +1,5 @@
-main: test_login.o
-	g++ -o test_login.cpp hash_table.cpp usecase.cpp
+usecase: main.cpp hash_table.cpp usecase.cpp
+	g++ -o usecase main.cpp hash_table.cpp usecase.cpp
 
 test: test_hash_table.o 
 	g++ -o test test_hash_table.o
