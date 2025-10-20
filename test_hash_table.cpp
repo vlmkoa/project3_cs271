@@ -211,23 +211,28 @@ void test_remove()
         //cout << "Before chained removal:\n" << chain_ht.to_string();
 
         chain_ht.remove(6);
-        if (before != ht.to_string()) {
-            cout << "Incorrect removal result. Expected to remove "
+        if (chain_ht.to_string() != "0: (3,9) (1,3) \n1: \n2: \n") {
+            cout << "Incorrect removal result. Expected to remove (2,6) from " << before << " but got " << chain_ht.to_string() << endl;
         }
-        cout << "After removing (2,6):\n" << chain_ht.to_string();
+        //cout << "After removing (2,6):\n" << chain_ht.to_string();
 
         chain_ht.remove(3);
         chain_ht.remove(9);
-        cout << "After removing all:\n" << chain_ht.to_string();
+        if (chain_ht.to_string() != "0: \n1: \n2: \n")
+        {
+            cout << "Incorrect removal result. Expected empty table but got\n\n" << chain_ht.to_string() << endl;
+        }
 
         //Clear function test
         HashTable<int> ht2(4);
         ht2.insert(1, 1);
         ht2.insert(2, 2);
         ht2.insert(3, 3);
-        cout << "Before clear:\n" << ht2.to_string();
         ht2.clear();
-        cout << "After clear:\n" << ht2.to_string();
+        if (ht2.to_string() != "0: \n1: \n2: \n3: \n")
+        {
+            cout << "Incorrect removal result. Expected empty table but got\n\n" << ht2.to_string() << endl;
+        }
 
     }
     catch (exception &e)
